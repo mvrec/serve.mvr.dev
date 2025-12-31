@@ -1,3 +1,7 @@
+/* Copyright © 2025 https://www.mixviberecords.com
+* Licensed Code With No Open Source Code
+* jQuery Code - © Mix Vibe Records */
+
 // Safe DOM selection function
 function getElement(selector, parent = document) {
     try {
@@ -77,6 +81,29 @@ function formatArtistLinks(artists) {
     return output;
 }
 
+function renderArtistsInstagram(artists) {
+    return artists.map(artist => `
+        <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+                <span class="font-medium text-sm md:text-base text-gray-300">
+                    ${artist.name}
+                </span>
+            </div>
+
+            <a href="${artist.instagram}" target="_blank" rel="noopener"
+                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition">
+                Follow
+            </a>
+        </div>
+    `).join("");
+}
+
 function setAudioSource(url) {
     const audio = document.getElementById("release-audio");
     const source = document.getElementById("release-audio-src");
@@ -114,15 +141,6 @@ function songInfo() {
 
     // Audio (AUTO reload)
     setAudioSource(trackInfo.source);
-
-    // Download
-    if (trackInfo.Tdownloadlink && trackInfo.Tdownloadformat) {
-        audio_down.attr(
-            "onclick",
-            `openDownloadlink('${trackInfo.Tdownloadlink}',
-            '${trackInfo.song} - [Mix Vibe Rec].${trackInfo.Tdownloadformat}')`
-        );
-    }
 
     // Artwork
     $(".aBm-PGbg").css("background-image", `url(${trackInfo.artwork})`);
@@ -166,8 +184,7 @@ function songInfo() {
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Record Label</span>
     <span class="text-sm break-words text-brand-500 sm:text-right">${trackInfo.recordLabel}</span>
-</div>
-`);
+</div>`);
 }
 
 function audioPlayer() {
@@ -206,31 +223,11 @@ function audioPlayer() {
     };
 }
 
-function renderArtistsInstagram(artists) {
-    return artists.map(artist => `
-        <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
-            <div class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-                <span class="font-medium text-sm md:text-base text-gray-300">
-                    ${artist.name}
-                </span>
-            </div>
-
-            <a href="${artist.instagram}" target="_blank" rel="noopener"
-                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition">
-                Follow
-            </a>
-        </div>
-    `).join("");
-}
-
+songInfo();
+audioPlayer();
 
 // Initialize all countdowns
+// <div class="countdown" data-date="year-month-day" data-time="23:00"></div>
 function initializeCountdowns() {
     const countdowns = getElements(".countdown");
 
@@ -301,7 +298,7 @@ function initializeCountdowns() {
             // Start countdown
             startCountdown(countdownEl, targetDate);
             // Rerender song info
-            songInfo();
+            //  songInfo();
         } catch (e) {
             console.error("Error initializing countdown:", e);
             countdownEl.innerHTML = '<div class="text-danger">Invalid date format</div>';
@@ -345,8 +342,6 @@ if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initializeCountdowns);
 } else {
     initializeCountdowns();
-    audioPlayer();
-    songInfo();
 }
 
 // jQuery version (optional)
@@ -355,9 +350,8 @@ if (typeof jQuery !== "undefined") {
         $(".countdown").each(function () {
             if (!this.dataset.initialized) {
                 initializeCountdowns();
-                audioPlayer();
-                songInfo();
             }
         });
     });
 }
+
