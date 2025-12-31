@@ -81,29 +81,6 @@ function formatArtistLinks(artists) {
     return output;
 }
 
-function renderArtistsInstagram(artists) {
-    return artists.map(artist => `
-        <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
-            <div class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-                <span class="font-medium text-sm md:text-base text-gray-300">
-                    ${artist.name}
-                </span>
-            </div>
-
-            <a href="${artist.instagram}" target="_blank" rel="noopener"
-                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition">
-                Follow
-            </a>
-        </div>
-    `).join("");
-}
-
 function setAudioSource(url) {
     const audio = document.getElementById("release-audio");
     const source = document.getElementById("release-audio-src");
@@ -152,6 +129,12 @@ function songInfo() {
     $(".aBm-RDte").html(formatDate(trackInfo.releaseDate));
     $(".shrturl, #getlink1").val(trackInfo.shorturl);
 
+    // Update Countdown Date
+    $(".countdown").attr("data-date", trackInfo.releaseDate);
+    // Reset countdown visibility in case it was hidden by previous logic
+    $(".countdown").removeClass("hidden");
+    $("#pFm-bTns").addClass("hidden");
+
     $("#credits-content").append(`
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Artist(s)</span>
@@ -192,6 +175,7 @@ function audioPlayer() {
     const playIcon = document.getElementById("play-icon");
     const btnText = document.getElementById("btn-text");
     const progressBar = document.getElementById("progress-bar");
+    const audioprogressBar = document.getElementById("audio-progress-bar");
     const playerContainer = document.getElementById("audio-player-container");
 
     $("#play-pause-btn").off("click").on("click", toggleAudio);
@@ -213,6 +197,7 @@ function audioPlayer() {
     audio.ontimeupdate = () => {
         if (!audio.duration) return;
         progressBar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+        audioprogressBar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
     };
 
     audio.onended = () => {
@@ -220,6 +205,7 @@ function audioPlayer() {
         btnText.textContent = "Preview";
         playerContainer.classList.remove("playing");
         progressBar.style.width = "0%";
+
     };
 }
 
@@ -228,6 +214,28 @@ audioPlayer();
 
 // Initialize all countdowns
 // <div class="countdown" data-date="year-month-day" data-time="23:00"></div>
+function renderArtistsInstagram(artists) {
+    return artists.map(artist => `
+        <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+                <span class="font-medium text-sm md:text-base text-gray-300">
+                    ${artist.name}
+                </span>
+            </div>
+
+            <a href="${artist.instagram}" target="_blank" rel="noopener"
+                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition">
+                Follow
+            </a>
+        </div>
+    `).join("");
+}
 function initializeCountdowns() {
     const countdowns = getElements(".countdown");
 
@@ -297,8 +305,6 @@ function initializeCountdowns() {
 
             // Start countdown
             startCountdown(countdownEl, targetDate);
-            // Rerender song info
-            //  songInfo();
         } catch (e) {
             console.error("Error initializing countdown:", e);
             countdownEl.innerHTML = '<div class="text-danger">Invalid date format</div>';
