@@ -127,7 +127,7 @@ function songInfo() {
     // Metadata
     $(".aBm-lbL").html(trackInfo.recordLabel);
     $(".aBm-RDte").html(formatDate(trackInfo.releaseDate));
-    $(".shrturl, #getlink1").val(trackInfo.shorturl);
+    $(".shrturl").html(trackInfo.shorturl);
 
     // Update Countdown Date
     $(".countdown").attr("data-date", trackInfo.releaseDate);
