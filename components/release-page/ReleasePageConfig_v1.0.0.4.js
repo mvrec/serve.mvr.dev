@@ -121,7 +121,7 @@ function songInfo() {
 
     // Artwork
     $(".aBm-PGbg").css("background-image", `url(${trackInfo.artwork})`);
-    $(".coverart").attr("src", trackInfo.artwork);
+    $("#cover-art-img").attr("src", trackInfo.artwork);
     $(".add-fav-btn").attr("data-coverartimg", trackInfo.artwork);
 
     // Metadata
