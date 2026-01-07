@@ -236,8 +236,16 @@ function renderArtistsInstagram(artists) {
         </div>
     `).join("");
 }
+
+var countdowns, releaseContent;
 function initializeCountdowns() {
-    const countdowns = getElements(".countdown");
+    countdowns = getElements(".countdown");
+    releaseContent = getElement("#pFm-bTns");
+
+    if (countdowns.length === 0) {
+        releaseContent.classList.remove("hidden");
+        return;
+    }
 
     countdowns.forEach((countdownEl) => {
         // Skip if already initialized
@@ -298,7 +306,6 @@ function initializeCountdowns() {
             // Check if countdown should be expired
             if (Date.now() >= targetDate) {
                 countdownEl.classList.add("hidden");
-                const releaseContent = getElement("#pFm-bTns");
                 if (releaseContent) releaseContent.classList.remove("hidden");
                 return;
             }
@@ -318,8 +325,8 @@ function startCountdown(element, targetDate) {
         const diff = targetDate - now;
 
         if (diff <= 0) {
+            console.log(countdowns);
             element.classList.add("hidden");
-            const releaseContent = getElement("#pFm-bTns");
             if (releaseContent) releaseContent.classList.remove("hidden");
             return;
         }
