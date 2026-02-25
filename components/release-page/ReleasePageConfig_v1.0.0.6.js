@@ -33,25 +33,27 @@ function formatArtistNames(artists) {
     if (!artists || !artists.length) return "";
 
     const { main, feat } = splitArtists(artists);
+
+    const formatSpotifyStyle = (arr) => {
+        if (arr.length === 1) return arr[0].name;
+        if (arr.length === 2) return `${arr[0].name} & ${arr[1].name}`;
+
+        const allButLast = arr.slice(0, -1).map(a => a.name).join(", ");
+        const last = arr[arr.length - 1].name;
+
+        return `${allButLast} & ${last}`;
+    };
+
     let output = "";
 
     // Main artists
-    if (main.length === 1) {
-        output = main[0].name;
-    } else if (main.length === 2) {
-        output = `${main[0].name} & ${main[1].name}`;
-    } else if (main.length > 2) {
-        output =
-            `${main[0].name} & ${main[1].name}, ` +
-            main
-                .slice(2)
-                .map((a) => a.name)
-                .join(", ");
+    if (main.length) {
+        output = formatSpotifyStyle(main);
     }
 
-    // Feat artists
+    // Featured artists
     if (feat.length) {
-        output += " feat. " + feat.map((a) => a.name).join(", ");
+        output += ` feat. ${formatSpotifyStyle(feat)}`;
     }
 
     return output;
@@ -61,21 +63,30 @@ function formatArtistLinks(artists) {
     if (!artists || !artists.length) return "";
 
     const { main, feat } = splitArtists(artists);
-    const link = (a) => `<a href="${a.href}" target="_blank" class="text-gray-300 hover:text-brand-500 transition-colors">${a.name}</a>`;
+
+    const link = (a) =>
+        `<a href="${a.href}" target="_blank" class="text-gray-300 hover:text-brand-500 transition-colors">${a.name}</a>`;
+
+    const formatSpotifyStyle = (arr) => {
+        if (arr.length === 1) return link(arr[0]);
+        if (arr.length === 2) return `${link(arr[0])} & ${link(arr[1])}`;
+
+        const allButLast = arr.slice(0, -1).map(link).join(", ");
+        const last = link(arr[arr.length - 1]);
+
+        return `${allButLast} & ${last}`;
+    };
+
     let output = "";
 
     // Main artists
-    if (main.length === 1) {
-        output = link(main[0]);
-    } else if (main.length === 2) {
-        output = `${link(main[0])} & ${link(main[1])}`;
-    } else if (main.length > 2) {
-        output = `${link(main[0])} & ${link(main[1])}, ` + main.slice(2).map(link).join(", ");
+    if (main.length) {
+        output = formatSpotifyStyle(main);
     }
 
-    // Feat artists
+    // Featured artists
     if (feat.length) {
-        output += " feat. " + feat.map(link).join(", ");
+        output += ` feat. ${formatSpotifyStyle(feat)}`;
     }
 
     return output;
