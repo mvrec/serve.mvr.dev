@@ -177,7 +177,7 @@ function songInfo() {
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Record Label</span>
-    <span class="text-sm break-words text-brand-500 sm:text-right">${trackInfo.recordLabel}</span>
+    <span class="text-sm break-words text-brand-500 sm:text-right">${trackInfo.recordLabel === 'Mix Vibe Audion' ? 'Mix Vibe Audion (A Mix Vibe Records Imprint)' : trackInfo.recordLabel}</span>
 </div>`);
 }
 
