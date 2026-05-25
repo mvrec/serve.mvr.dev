@@ -1,6 +1,6 @@
 /* Copyright © 2025 https://www.mixviberecords.com
 * Licensed Code With No Open Source Code
-* jQuery Code - © 2025 Mix Vibe Records */
+* jQuery Code - © Mix Vibe Records */
 
 // Safe DOM selection function
 function getElement(selector, parent = document) {
@@ -145,6 +145,7 @@ function songInfo() {
     // Reset countdown visibility in case it was hidden by previous logic
     $(".countdown").removeClass("hidden");
     $("#pFm-bTns").addClass("hidden");
+    $("#play-pause-btn").addClass("hidden");
 
     $("#credits-content").append(`
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
@@ -229,20 +230,19 @@ function renderArtistsInstagram(artists) {
     return artists.map(artist => `
         <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
             <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                <span class="font-medium text-sm md:text-base text-gray-300">
+                    ${artist.name}
+                </span>
+            </div>
+
+            <a href="${artist.instagram}" target="_blank" rel="noopener">
                 <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                 </svg>
-                <span class="font-medium text-sm md:text-base text-gray-300">
-                    ${artist.name}
-                </span>
-            </div>
-
-            <a href="${artist.instagram}" target="_blank" rel="noopener"
-                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition">
-                Follow
             </a>
         </div>
     `).join("");
@@ -255,6 +255,8 @@ function initializeCountdowns() {
 
     if (countdowns.length === 0) {
         releaseContent.classList.remove("hidden");
+        const playBtn = getElement("#play-pause-btn");
+        if (playBtn) playBtn.classList.remove("hidden");
         return;
     }
 
@@ -289,13 +291,30 @@ function initializeCountdowns() {
 <!-- Artists -->
 <div class="flex items-center w-full mt-6">
   <div class="flex-grow border-t border-white/5"></div>
-  <span class="mx-4 text-gray-500 text-sm font-medium">SUPPORT</span>
+  <span class="mx-4 text-gray-500 text-sm font-medium">SUPPORT ARTISTS</span>
   <div class="flex-grow border-t border-white/5"></div>
 </div>
 
 <div class="flex flex-row flex-wrap justify-center gap-4 mt-4">
     <div class="w-full max-w-md p-4 space-y-4">
         ${renderArtistsInstagram(trackInfo.artists)}
+        <div class="flex items-center w-full mt-6">
+            <div class="flex-grow border-t border-white/5"></div>
+            <span class="mx-4 text-gray-500 text-sm font-medium">LABEL</span>
+            <div class="flex-grow border-t border-white/5"></div>
+        </div>
+        <div class="flex flex-row flex-wrap justify-center gap-4 mt-4">
+            <a href="https://www.youtube.com/MixVibeRec?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg> MVR <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg> Subscribe
+            </a>
+            <a href="https://www.youtube.com/@MixVibeAudion?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg> MVA <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg> Subscribe
+            </a>
+             <a href="https://open.spotify.com/user/9swsq4eb9bfrmh7w9h6jgadpo/playlists" target="_blank" rel="noopener"
+                class="px-4 py-1.5 text-sm font-medium text-white bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition flex items-center justify-center">
+                <i class="fab fa-spotify mr-2"></i> Playlists
+            </a>
+        </div>
     </div>
 </div> `;
 
@@ -318,6 +337,8 @@ function initializeCountdowns() {
             if (Date.now() >= targetDate) {
                 countdownEl.classList.add("hidden");
                 if (releaseContent) releaseContent.classList.remove("hidden");
+                const playBtn = document.getElementById("play-pause-btn");
+                if (playBtn) playBtn.classList.remove("hidden");
                 return;
             }
 
@@ -339,6 +360,8 @@ function startCountdown(element, targetDate) {
             console.log(countdowns);
             element.classList.add("hidden");
             if (releaseContent) releaseContent.classList.remove("hidden");
+            const playBtn = document.getElementById("play-pause-btn");
+            if (playBtn) playBtn.classList.remove("hidden");
             return;
         }
 
