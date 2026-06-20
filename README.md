@@ -1,5 +1,11 @@
 # serve.mvr.dev (Mix Vibe Rec CDN)
 
+![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge)
+![Status: Active CDN](https://img.shields.io/badge/Status-Active_CDN-success.svg?style=for-the-badge)
+![Maintained By: Mix Vibe Rec](https://img.shields.io/badge/Maintained_By-Mix_Vibe_Rec-blueviolet.svg?style=for-the-badge)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
+
 > **Official Asset Delivery Network for the Mix Vibe Rec Ecosystem**
 
 Welcome to the `serve.mvr.dev` repository. This project is maintained by the **Mix Vibe Rec Development Team** and serves as our dedicated Content Delivery Network (CDN) via GitHub Pages. 
