@@ -1,10 +1,10 @@
-# serve.mvr.dev (Mix Vibe Rec CDN)
+> **Mix Vibe Rec CDN**
 
-![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge)
-![Status: Active CDN](https://img.shields.io/badge/Status-Active_CDN-success.svg?style=for-the-badge)
-![Maintained By: Mix Vibe Rec](https://img.shields.io/badge/Maintained_By-Mix_Vibe_Rec-blueviolet.svg?style=for-the-badge)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
+![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg?style=flat-square)
+![Status: Active CDN](https://img.shields.io/badge/Status-Active_CDN-success.svg?style=flat-square)
+![Maintained By: Mix Vibe Rec](https://img.shields.io/badge/Maintained_By-Mix_Vibe_Rec-blueviolet.svg?style=flat-square)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jquery&logoColor=white)
 
 > **Official Asset Delivery Network for the Mix Vibe Rec Ecosystem**
 
@@ -14,7 +14,7 @@ It centrally hosts our custom stylesheets (CSS) and JavaScript libraries (jQuery
 
 ---
 
-## 🛑 License & Copyright Notice
+> **📝 License & Copyright Notice**
 
 **Publicly Accessible, but NOT Open Source.**
 
@@ -26,7 +26,7 @@ While this repository is public to allow our websites to fetch necessary assets,
 
 ---
 
-## 🛠️ Hosted Technologies
+> **🛠️ Hosted Technologies**
 
 This CDN distributes the core frontend technologies powering our platform:
 
