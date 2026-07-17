@@ -141,10 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Style the active/inactive items in the dropdown
             optionElements.forEach(item => {
                 if (item.nativeOpt.value === selectedValue) {
-                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors bg-brand-500/10 text-brand-400 cursor-pointer';
+                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors bg-brand-500/10 text-brand-500 cursor-pointer';
                     item.check.classList.remove('opacity-0');
                 } else {
-                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors text-gray-300 hover:bg-black/40 hover:text-white cursor-pointer';
+                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors text-gray-300 hover:bg-white/8 hover:text-white cursor-pointer';
                     item.check.classList.add('opacity-0');
                 }
             });
