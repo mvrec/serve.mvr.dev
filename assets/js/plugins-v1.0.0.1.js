@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 1. Create the Button UI
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'w-full flex items-center justify-between bg-black/40 border border-white/10 hover:border-white/20 rounded-xl px-4 py-2 text-left transition-all duration-200 focus:outline-none cursor-pointer';
+        button.className = 'w-full flex items-center justify-between bg-black/40 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 text-left transition-all duration-200 focus:outline-none cursor-pointer';
 
         const buttonText = document.createElement('span');
         buttonText.className = 'text-gray-500 truncate pr-4';
