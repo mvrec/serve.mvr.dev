@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             label.textContent = opt.text;
 
             const checkMark = document.createElement('span');
-            checkMark.className = 'opacity-0 transition-opacity';
+            checkMark.className = 'hidden';
             checkMark.innerHTML = checkIcon;
 
             itemBtn.appendChild(label);
@@ -141,11 +141,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Style the active/inactive items in the dropdown
             optionElements.forEach(item => {
                 if (item.nativeOpt.value === selectedValue) {
-                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors bg-brand-500/10 text-brand-500 cursor-pointer';
-                    item.check.classList.remove('opacity-0');
+                    item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors bg-brand-500/10 text-brand-400 cursor-pointer';
+                    item.check.classList.remove('hidden');
                 } else {
                     item.btn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors text-gray-300 hover:bg-white/8 hover:text-white cursor-pointer';
-                    item.check.classList.add('opacity-0');
+                    item.check.classList.add('hidden');
                 }
             });
         }
