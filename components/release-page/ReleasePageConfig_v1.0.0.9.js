@@ -121,27 +121,28 @@ function formatDate(dateStr) {
 }
 
 function songInfo() {
-    const artistData = trackInfo.artists;
+    const track0 = releaseMeta.tracks[0];
+    const artistData = track0.artists;
 
     // Artists
     $(".trk-aTst-nMe").html(formatArtistLinks(artistData));
     $(".aBm-aTst").html(formatArtistNames(artistData));
 
     // Audio (AUTO reload)
-    setAudioSource(trackInfo.source);
+    setAudioSource(track0.source || releaseMeta.source);
 
     // Artwork
-    $(".aBm-PGbg").css("background-image", `url(${trackInfo.artwork})`);
-    $("#cover-art-img").attr("src", trackInfo.artwork);
-    $(".add-fav-btn").attr("data-coverartimg", trackInfo.artwork);
+    $(".aBm-PGbg").css("background-image", `url(${releaseMeta.artwork})`);
+    $("#cover-art-img").attr("src", releaseMeta.artwork);
+    $(".add-fav-btn").attr("data-coverartimg", releaseMeta.artwork);
 
     // Metadata
-    $(".aBm-lbL").html(trackInfo.recordLabel);
-    $(".aBm-RDte").html(formatDate(trackInfo.releaseDate));
-    $(".shrturl").html(trackInfo.shorturl);
+    $(".aBm-lbL").html(releaseMeta.recordLabel);
+    $(".aBm-RDte").html(formatDate(releaseMeta.releaseDate));
+    $(".shrturl").html(releaseMeta.shorturl);
 
     // Update Countdown Date
-    $(".countdown").attr("data-date", trackInfo.releaseDate);
+    $(".countdown").attr("data-date", releaseMeta.releaseDate);
     // Reset countdown visibility in case it was hidden by previous logic
     $(".countdown").removeClass("hidden");
     $("#pFm-bTns").addClass("hidden");
@@ -154,31 +155,31 @@ function songInfo() {
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Composer(s)</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${trackInfo.composer}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${track0.composer}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Producer(s)</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${trackInfo.producer}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${track0.producer}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Lyricist(s)</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${trackInfo.lyricist}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${track0.lyricist}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Language</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${trackInfo.language}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${releaseMeta.language}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Release Date</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${formatDate(trackInfo.releaseDate)}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${formatDate(releaseMeta.releaseDate)}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Length</span>
-    <span class="text-sm break-words text-gray-400 sm:text-right">${trackInfo.length}</span>
+    <span class="text-sm break-words text-gray-400 sm:text-right">${track0.length}</span>
 </div>
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline border-b border-white/5 pb-2 gap-1">
     <span class="text-gray-400 uppercase text-[10px] font-bold tracking-wider shrink-0">Record Label</span>
-    <span class="text-sm break-words text-brand-500 sm:text-right">${trackInfo.recordLabel === 'Mix Vibe Audion' ? 'Mix Vibe Audion (A Mix Vibe Records Imprint)' : trackInfo.recordLabel}</span>
+    <span class="text-sm break-words text-brand-500 sm:text-right">${releaseMeta.recordLabel === 'Mix Vibe Audion' ? 'Mix Vibe Audion (A Mix Vibe Records Imprint)' : releaseMeta.recordLabel}</span>
 </div>`);
 }
 
@@ -228,23 +229,18 @@ audioPlayer();
 // <div class="countdown" data-date="year-month-day" data-time="23:00"></div>
 function renderArtistsInstagram(artists) {
     return artists.map(artist => `
-        <div class="flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card">
+        <a href="${artist.instagram}" target="_blank" rel="noopener" class="group flex items-center justify-between bg-[radial-gradient(circle_at_top,rgba(201,244,80,0.05),rgba(255,255,255,0.02))] backdrop-blur-md border border-white/5 px-3 md:px-4 py-3 rounded-lg shadow-md neon-card hover:bg-white/5 transition-all">
             <div class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
-                <span class="font-medium text-sm md:text-base text-gray-300">
+                <svg class="w-5 h-5 text-brand-500 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                <span class="font-medium text-sm md:text-base text-gray-300 group-hover:text-white transition-colors">
                     ${artist.name}
                 </span>
             </div>
 
-            <a href="${artist.instagram}" target="_blank" rel="noopener">
-                <svg class="w-5 h-5 text-brand-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-            </a>
-        </div>
+            <div class="text-gray-400 group-hover:text-brand-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right-icon lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path><path d="m21 3-9 9" class="s-1"></path><path d="M15 3h6v6" class="s-1"></path></svg>
+            </div>
+        </a>
     `).join("");
 }
 
@@ -297,21 +293,21 @@ function initializeCountdowns() {
 
 <div class="flex flex-row flex-wrap justify-center gap-4 mt-4">
     <div class="w-full max-w-md p-4 space-y-4">
-        ${renderArtistsInstagram(trackInfo.artists)}
+        ${renderArtistsInstagram(releaseMeta.tracks[0].artists)}
         <div class="flex items-center w-full mt-6">
             <div class="flex-grow border-t border-white/5"></div>
             <span class="mx-4 text-gray-500 text-sm font-medium">LABEL</span>
             <div class="flex-grow border-t border-white/5"></div>
         </div>
         <div class="flex flex-row flex-wrap justify-center gap-4 mt-4">
-            <a href="https://www.youtube.com/MixVibeRec?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-gray-300 bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
+            <a href="https://www.youtube.com/MixVibeRec?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-red-500 bg-red-500/10 backdrop-blur-md border border-red-500/20 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg> MVR <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg> Subscribe
             </a>
-            <a href="https://www.youtube.com/@MixVibeAudion?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-gray-300 bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
+            <a href="https://www.youtube.com/@MixVibeAudion?sub_confirmation=1" target="_blank" rel="noopener" class="px-4 py-1.5 text-sm font-medium text-red-500 bg-red-500/10 backdrop-blur-md border border-red-500/20 rounded-full hover:bg-red-500 hover:text-black transition flex items-center justify-center">
                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg> MVA <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg> Subscribe
             </a>
              <a href="https://open.spotify.com/user/9swsq4eb9bfrmh7w9h6jgadpo/playlists" target="_blank" rel="noopener"
-                class="px-4 py-1.5 text-sm font-medium text-gray-300 bg-white/5 backdrop-blur-md border border-white/5 rounded-full hover:bg-brand-500 hover:text-black transition flex items-center justify-center">
+                class="px-4 py-1.5 text-sm font-medium text-green-500 bg-green-500/10 backdrop-blur-md border border-green-500/10 rounded-full hover:bg-green-500 hover:text-black transition flex items-center justify-center">
                 <i class="fab fa-spotify mr-2"></i> Playlists
             </a>
         </div>
