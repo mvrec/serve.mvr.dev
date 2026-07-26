@@ -25,7 +25,35 @@ if (typeof window.trackInfo === 'undefined' && typeof window.releaseMeta !== 'un
         length: window.releaseMeta.tracks[0].length
     };
 } 
-
+// If only trackInfo is defined, generate the new releaseMeta format
+else if (typeof window.releaseMeta === 'undefined' && typeof window.trackInfo !== 'undefined') {
+    window.releaseMeta = {
+        tracks: [{
+            song: window.trackInfo.song || "",
+            artists: window.trackInfo.artists || [],
+            sptfytrackid: window.trackInfo.sptfyid ? window.trackInfo.sptfyid.replace("track:", "") : "",
+            isrc: "",
+            version: "",
+            length: window.trackInfo.length || "",
+            producer: window.trackInfo.producer || "",
+            composer: window.trackInfo.composer || "",
+            lyricist: window.trackInfo.lyricist || "",
+            source: window.trackInfo.source || ""
+        }],
+        releasetype: "Single",
+        sptfyalbumid: window.trackInfo.sptfyid ? window.trackInfo.sptfyid.replace("track:", "") : "",
+        artwork: window.trackInfo.artwork || "",
+        source: window.trackInfo.source || "",
+        catno: window.trackInfo.musicID || window.trackInfo.catno || "",
+        upc: "",
+        recordLabel: window.trackInfo.recordLabel || "",
+        shorturl: window.trackInfo.shorturl || "",
+        releaseDate: window.trackInfo.releaseDate || "",
+        writter: window.trackInfo.writter || "",
+        language: window.trackInfo.language || "",
+        tags: window.trackInfo.tags || ""
+    };
+}
 
 // Safe DOM selection function
 function getElement(selector, parent = document) {
