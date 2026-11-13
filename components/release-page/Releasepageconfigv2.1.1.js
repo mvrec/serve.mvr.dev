@@ -289,7 +289,7 @@ function checkTakedown() {
       if (rTags) rTags.remove();       
       trkdTls.insertAdjacentHTML(
           "beforeend",
-          `<div class='text-sm p-3 rounded-full bg-orange-500/10  border border-orange-500/10 text-orange-500'>Sorry, Platforms & stores links are locked for the takedown process.</div>`
+          `<div class="text-sm p-3 flex items-center rounded-full bg-orange-500/10  border border-orange-500/10 text-orange-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="ml-2">Platforms &amp; stores links are locked for the takedown process.</span></div>`
         );
        targetedLabels.forEach(label => {
         label.style.opacity = '0.5';
