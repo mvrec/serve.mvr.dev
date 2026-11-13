@@ -283,7 +283,7 @@ function checkTakedown() {
     const rTags = document.getElementById("tags");
     const targetedLabels = document.querySelectorAll('label[for="release-credits"], label[for="offshare-check"], label[for="offqrcode-check"], #play-pause-btn');
 
-    if (pBody && !pBody.classList.contains("song-takedown")) {
+    if (pBody && pBody.classList.contains("song-takedown")) {
       if (pFmbTns) pFmbTns.remove();
       if (categoryTags) categoryTags.remove();
       if (rTags) rTags.remove();       
