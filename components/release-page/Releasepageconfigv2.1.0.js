@@ -275,8 +275,34 @@ function audioPlayer() {
     };
 }
 
+function checkTakedown() {
+    const pBody = document.getElementById("postBody");
+    const trkdTls = document.getElementById("trk-dTls");
+    const pFmbTns = document.getElementById("pFm-bTns");
+    const categoryTags = document.getElementById("categorytags");
+    const rTags = document.getElementById("tags");
+    const targetedLabels = document.querySelectorAll('label[for="release-credits"], label[for="offshare-check"], label[for="offqrcode-check"], #play-pause-btn');
+
+    if (pBody && !pBody.classList.contains("song-takedown")) {
+      if (pFmbTns) pFmbTns.remove();
+      if (categoryTags) categoryTags.remove();
+      if (rTags) rTags.remove();       
+      trkdTls.insertAdjacentHTML(
+          "beforeend",
+          `<div class='text-sm p-3 rounded-full bg-orange-500/10  border border-orange-500/10 text-orange-500'>Sorry, Platforms & stores links are locked for the takedown process.</div>`
+        );
+       targetedLabels.forEach(label => {
+        label.style.opacity = '0.5';
+        label.style.pointerEvents = 'none'; // Makes them unclickable
+       });
+    } 
+    
+}
+ 
+
 songInfo();
 audioPlayer();
+checkTakedown();
 
 // Initialize all countdowns
 // <div class="countdown" data-date="year-month-day" data-time="23:00"></div>
