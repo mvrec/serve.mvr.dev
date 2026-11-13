@@ -329,7 +329,7 @@ function initializeCountdowns() {
     releaseContent = getElement("#pFm-bTns");
 
     if (countdowns.length === 0) {
-        releaseContent.classList.remove("hidden");
+        if (releaseContent) releaseContent.classList.remove("hidden");
         const playBtn = getElement("#play-pause-btn");
         if (playBtn) playBtn.classList.remove("hidden");
         return;
